@@ -1,0 +1,29 @@
+.project {
+  background-color: white;
+  padding: 2rem;
+  height: 100%;
+}
+.project form {
+  padding: 1rem 0;
+}
+.project-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 0;
+}
+.description-group {
+  display: flex;
+  margin: 1rem 0;
+}
+.sure-form {
+  padding: 0 !important;
+}
+.yes-button {
+  width: 3rem;
+  margin: 0 1rem;
+  background-color: red;
+  color: white;
+}
+.no-button {
+  width: 3rem;
+}

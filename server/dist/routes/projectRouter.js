@@ -39,17 +39,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = require("express");
 var db_1 = require("../db");
 var router = express_1.Router();
-router.post("/create", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, name_1, description, project, error_1;
+router.post("/add", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var _a, name_1, description, userId, project, error_1;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
                 _b.trys.push([0, 2, , 3]);
-                _a = req.body, name_1 = _a.name, description = _a.description;
-                return [4 /*yield*/, db_1.pool.query("INSERT INTO projects (name, description) VALUES($1, $2) RETURNING *", [
-                        name_1,
-                        description
-                    ])];
+                _a = req.body, name_1 = _a.name, description = _a.description, userId = _a.userId;
+                return [4 /*yield*/, db_1.pool.query("INSERT INTO projects (user_id, name, description) VALUES($1, $2, $3) RETURNING *", [userId, name_1, description])];
             case 1:
                 project = _b.sent();
                 res.json(project.rows[0]);
@@ -62,22 +59,25 @@ router.post("/create", function (req, res) { return __awaiter(void 0, void 0, vo
         }
     });
 }); });
-router.get("/", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var projects, error_2;
+router.get("/:id", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var id, projects, error_2;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                _a.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, db_1.pool.query("SELECT * from projects")];
+                id = req.params.id;
+                _a.label = 1;
             case 1:
+                _a.trys.push([1, 3, , 4]);
+                return [4 /*yield*/, db_1.pool.query("SELECT * FROM projects WHERE user_id = $1", [id])];
+            case 2:
                 projects = _a.sent();
                 res.json(projects.rows);
-                return [3 /*break*/, 3];
-            case 2:
+                return [3 /*break*/, 4];
+            case 3:
                 error_2 = _a.sent();
                 console.log(error_2);
-                return [3 /*break*/, 3];
-            case 3: return [2 /*return*/];
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
         }
     });
 }); });
@@ -115,7 +115,7 @@ router.delete("/:id", function (req, res) { return __awaiter(void 0, void 0, voi
                 return [4 /*yield*/, db_1.pool.query("DELETE FROM projects WHERE id = $1", [id])];
             case 1:
                 _a.sent();
-                res.json({ deleted: true });
+                res.json({ deletedId: id });
                 return [3 /*break*/, 3];
             case 2:
                 error_4 = _a.sent();

@@ -1,0 +1,13 @@
+.sign-form {
+  background-color: white;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  border: 1px solid black;
+}
+.sign-form input {
+  margin: 0 0.5rem 0 0;
+  width: 10rem;
+}
+.sign-form label {
+  margin: 0 0.5rem 0 0;
+}

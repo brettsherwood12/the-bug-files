@@ -1,7 +1,75 @@
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
-
+html,
+button,
+input,
+textarea,
+select {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 17px;
+}
 body {
   margin: 0;
+}
+button:hover {
+  cursor: pointer;
+}
+.App {
+  background-image: url("./images/woodgrain.jpg");
+  height: 100vh;
+}
+main {
+  display: flex;
+  margin: 0 2rem;
+}
+.delete-button {
+  color: white;
+  background-color: red;
+}
+.project-tab {
+  display: flex;
+  padding-bottom: 0.5rem;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  background-color: #ffe4c2;
+  padding-right: 0.5rem;
+  padding-top: 0.5rem;
+  border-radius: 0 0.5rem 0.5rem 0;
+  border: 1px solid black;
+  border-left: 0;
+}
+.project-tab:hover {
+  cursor: pointer;
+}
+.project-active {
+  width: 60rem;
+  padding: 1rem;
+  width: 100%;
+  height: calc(100vh - 6rem);
+  background-color: #ffe4c2;
+  border-radius: 0 0.5rem 0.5rem 0.5rem;
+  border: 1px solid black;
+}
+.tab-heading {
+  margin: 0.25rem;
+  background-color: white;
+  padding: 0.5rem 0.25rem;
+}
+.add-project {
+  font-size: 2rem;
+  margin-left: 0.5rem;
+  color: white;
+  font-weight: bold;
+}
+.add-project:hover {
+  cursor: pointer;
+}
+.signature {
+  font-weight: bold;
+  float: right;
+  margin-right: 2rem;
+  margin-top: 0.5rem;
 }

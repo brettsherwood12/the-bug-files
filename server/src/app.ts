@@ -1,10 +1,10 @@
 import express from "express";
 import cors from "cors";
 
-//import userRouter from "./routes/userRouter";
-//import commentRouter from "./routes/commentRouter";
 import projectRouter from "./routes/projectRouter";
-//import bugRouter from "./routes/bugRouter";
+import bugRouter from "./routes/bugRouter";
+import userRouter from "./routes/userRouter";
+//import commentRouter from "./routes/commentRouter";
 
 const app = express();
 
@@ -17,9 +17,9 @@ app.use(
 app.use(express.json());
 
 //routers
-//app.use("/users", userRouter);
 app.use("/projects", projectRouter);
+app.use("/bugs", bugRouter);
+app.use("/users", userRouter);
 //app.use("/comments", commentRouter);
-//app.use("/bugs", bugRouter);
 
 export default app;

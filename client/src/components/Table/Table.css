@@ -1,0 +1,30 @@
+table {
+  table-layout: fixed;
+  width: 100%;
+}
+th,
+td {
+  padding: 0.5rem;
+  border: 1px solid gray;
+}
+th {
+  text-align: start;
+}
+.first-column {
+  width: 5%;
+}
+.second-column {
+  width: 10%;
+}
+.third-column {
+  /* width: 5%; */
+}
+.fourth-column {
+  /* width: 5%; */
+}
+.fifth-column {
+  width: 10%;
+}
+.description-textarea {
+  width: 100%;
+}

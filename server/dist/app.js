@@ -5,10 +5,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importDefault(require("express"));
 var cors_1 = __importDefault(require("cors"));
-//import userRouter from "./routes/userRouter";
-//import commentRouter from "./routes/commentRouter";
 var projectRouter_1 = __importDefault(require("./routes/projectRouter"));
-//import bugRouter from "./routes/bugRouter";
+var bugRouter_1 = __importDefault(require("./routes/bugRouter"));
+var userRouter_1 = __importDefault(require("./routes/userRouter"));
+//import commentRouter from "./routes/commentRouter";
 var app = express_1.default();
 // middleware
 app.use(cors_1.default({
@@ -16,8 +16,8 @@ app.use(cors_1.default({
 }));
 app.use(express_1.default.json());
 //routers
-//app.use("/users", userRouter);
 app.use("/projects", projectRouter_1.default);
+app.use("/bugs", bugRouter_1.default);
+app.use("/users", userRouter_1.default);
 //app.use("/comments", commentRouter);
-//app.use("/bugs", bugRouter);
 exports.default = app;

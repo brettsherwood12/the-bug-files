@@ -3,22 +3,23 @@ import { pool } from "../db";
 
 const router = Router();
 
-router.post("/create", async (req, res) => {
+router.post("/add", async (req, res) => {
   try {
-    const { name, description } = req.body;
-    const project = await pool.query("INSERT INTO projects (name, description) VALUES($1, $2) RETURNING *", [
-      name,
-      description
-    ]);
+    const { name, description, userId } = req.body;
+    const project = await pool.query(
+      "INSERT INTO projects (user_id, name, description) VALUES($1, $2, $3) RETURNING *",
+      [userId, name, description]
+    );
     res.json(project.rows[0]);
   } catch (error) {
     console.log(error);
   }
 });
 
-router.get("/", async (req, res) => {
+router.get("/:id", async (req, res) => {
+  const { id } = req.params;
   try {
-    const projects = await pool.query("SELECT * from projects");
+    const projects = await pool.query("SELECT * FROM projects WHERE user_id = $1", [id]);
     res.json(projects.rows);
   } catch (error) {
     console.log(error);
@@ -42,7 +43,7 @@ router.delete("/:id", async (req, res) => {
   try {
     const { id } = req.params;
     await pool.query("DELETE FROM projects WHERE id = $1", [id]);
-    res.json({ deleted: true });
+    res.json({ deletedId: id });
   } catch (error) {
     console.log(error);
   }

@@ -37,20 +37,74 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = require("express");
+var db_1 = require("../db");
 var router = express_1.Router();
-router.post("/", function (req, res) { return __awaiter(void 0, void 0, void 0, function () { return __generator(this, function (_a) {
-    return [2 /*return*/];
-}); }); });
-router.get("/", function (req, res) { return __awaiter(void 0, void 0, void 0, function () { return __generator(this, function (_a) {
-    return [2 /*return*/];
-}); }); });
-router.get("/:id", function (req, res) { return __awaiter(void 0, void 0, void 0, function () { return __generator(this, function (_a) {
-    return [2 /*return*/];
-}); }); });
+router.post("/add", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var _a, projectId, description, project, error_1;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
+            case 0:
+                _b.trys.push([0, 2, , 3]);
+                _a = req.body, projectId = _a.projectId, description = _a.description;
+                return [4 /*yield*/, db_1.pool.query("INSERT INTO bugs (project_id, description) VALUES($1, $2) RETURNING *", [
+                        projectId,
+                        description
+                    ])];
+            case 1:
+                project = _b.sent();
+                res.json(project.rows[0]);
+                return [3 /*break*/, 3];
+            case 2:
+                error_1 = _b.sent();
+                console.log(error_1);
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
+        }
+    });
+}); });
+router.get("/:id", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var id, bugs, error_2;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                id = req.params.id;
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                return [4 /*yield*/, db_1.pool.query("SELECT * from bugs WHERE project_id = $1", [id])];
+            case 2:
+                bugs = _a.sent();
+                res.json(bugs.rows);
+                return [3 /*break*/, 4];
+            case 3:
+                error_2 = _a.sent();
+                console.log(error_2);
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
+        }
+    });
+}); });
 router.put("/:id", function (req, res) { return __awaiter(void 0, void 0, void 0, function () { return __generator(this, function (_a) {
     return [2 /*return*/];
 }); }); });
-router.delete("/:id", function (req, res) { return __awaiter(void 0, void 0, void 0, function () { return __generator(this, function (_a) {
-    return [2 /*return*/];
-}); }); });
+router.delete("/:id", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var id, error_3;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                id = req.params.id;
+                return [4 /*yield*/, db_1.pool.query("DELETE FROM bugs WHERE id = $1", [id])];
+            case 1:
+                _a.sent();
+                res.json({ deleted: true });
+                return [3 /*break*/, 3];
+            case 2:
+                error_3 = _a.sent();
+                console.log(error_3);
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
+        }
+    });
+}); });
 exports.default = router;

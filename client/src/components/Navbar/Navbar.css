@@ -1,7 +1,35 @@
 nav {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   height: 4rem;
-  padding: 1rem;
-  background-color: lightyellow;
+  padding: 0 2rem;
+  background-color: transparent;
+}
+.heading {
+  display: flex;
+}
+.heading img {
+  width: 2rem;
+  margin-right: 0.5rem;
+}
+.heading h1 {
+  font-size: 2rem;
+}
+.auth {
+  display: flex;
+  align-items: center;
+}
+.nav-action-span {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: right;
+  margin-left: 1rem;
+}
+.nav-action-span p {
+  font-weight: bold;
+}
+.toggle-span p {
+  color: white;
 }

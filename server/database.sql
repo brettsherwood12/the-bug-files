@@ -2,18 +2,11 @@
 
 CREATE DATABASE bug-tracker;
 
-CREATE TABLE users(id SERIAL PRIMARY KEY, name VARCHAR(25), passwordHash VARCHAR(255));
+CREATE TABLE users(id SERIAL PRIMARY KEY, username VARCHAR(25), password_hash VARCHAR(100));
 
-CREATE TABLE projects(id SERIAL PRIMARY KEY, name VARCHAR(25), description VARCHAR(255));
+CREATE TABLE projects(id SERIAL PRIMARY KEY, user_id INTEGER, name VARCHAR(25), description VARCHAR(255), CONSTRAINT fk_project FOREIGN KEY(user_id) REFERENCES users(id));
 
-CREATE TABLE comments(id SERIAL PRIMARY KEY, bugId FOREIGN KEY REFERENCES bugs(id), description VARCHAR(255));
+CREATE TABLE bugs(id SERIAL PRIMARY KEY, project_id INTEGER, description VARCHAR(255), status status_type DEFAULT 'To Do', CONSTRAINT fk_project FOREIGN KEY(project_id) REFERENCES projects(id));
+CREATE TYPE status_type AS ENUM ('To Do', 'Doing', 'Done');
 
-CREATE TABLE bugs(
-  id SERIAL PRIMARY KEY, 
-  projectId FOREIGN KEY REFERENCES projects(id), 
-  owner FOREIGN KEY REFERENCES USER(id), 
-  status ENUM("To Squash", "Squishing", "Squashed") DEFAULT "To Squash", 
-  description VARCHAR(255),
-  comments FOREIGN KEY REFERENCES comments(id)
-);
-
+CREATE TABLE comments(id SERIAL PRIMARY KEY, bug_id INTEGER, description VARCHAR(255), CONSTRAINT fk_bug FOREIGN KEY(bug_id) REFERENCES bugs(id));
