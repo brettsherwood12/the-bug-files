@@ -40,7 +40,7 @@ var express_1 = require("express");
 var db_1 = require("../db");
 var router = express_1.Router();
 router.post("/add", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, projectId, description, project, error_1;
+    var _a, projectId, description, data, error_1;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
@@ -51,8 +51,8 @@ router.post("/add", function (req, res) { return __awaiter(void 0, void 0, void 
                         description
                     ])];
             case 1:
-                project = _b.sent();
-                res.json(project.rows[0]);
+                data = _b.sent();
+                res.json(data.rows[0]);
                 return [3 /*break*/, 3];
             case 2:
                 error_1 = _b.sent();
@@ -62,8 +62,8 @@ router.post("/add", function (req, res) { return __awaiter(void 0, void 0, void 
         }
     });
 }); });
-router.get("/:id", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var id, bugs, error_2;
+router.get("/get/:id", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var id, data, error_2;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -73,8 +73,8 @@ router.get("/:id", function (req, res) { return __awaiter(void 0, void 0, void 0
                 _a.trys.push([1, 3, , 4]);
                 return [4 /*yield*/, db_1.pool.query("SELECT * from bugs WHERE project_id = $1", [id])];
             case 2:
-                bugs = _a.sent();
-                res.json(bugs.rows);
+                data = _a.sent();
+                res.json(data.rows);
                 return [3 /*break*/, 4];
             case 3:
                 error_2 = _a.sent();
@@ -84,26 +84,73 @@ router.get("/:id", function (req, res) { return __awaiter(void 0, void 0, void 0
         }
     });
 }); });
-router.put("/:id", function (req, res) { return __awaiter(void 0, void 0, void 0, function () { return __generator(this, function (_a) {
-    return [2 /*return*/];
-}); }); });
-router.delete("/:id", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var id, error_3;
+router.put("/status", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var _a, id, status, data, error_3;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
+            case 0:
+                console.log(req.body);
+                _a = req.body, id = _a.id, status = _a.status;
+                _b.label = 1;
+            case 1:
+                _b.trys.push([1, 3, , 4]);
+                return [4 /*yield*/, db_1.pool.query("UPDATE bugs SET status = $2 WHERE id = $1 RETURNING *", [id, status])];
+            case 2:
+                data = _b.sent();
+                res.json(data.rows[0]);
+                return [3 /*break*/, 4];
+            case 3:
+                error_3 = _b.sent();
+                console.log(error_3);
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
+        }
+    });
+}); });
+router.delete("/delete/:id", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var id, error_4;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                _a.trys.push([0, 2, , 3]);
                 id = req.params.id;
-                return [4 /*yield*/, db_1.pool.query("DELETE FROM bugs WHERE id = $1", [id])];
+                _a.label = 1;
             case 1:
+                _a.trys.push([1, 3, , 4]);
+                return [4 /*yield*/, db_1.pool.query("DELETE FROM bugs WHERE id = $1", [id])];
+            case 2:
                 _a.sent();
                 res.json({ deleted: true });
-                return [3 /*break*/, 3];
+                return [3 /*break*/, 4];
+            case 3:
+                error_4 = _a.sent();
+                console.log(error_4);
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
+        }
+    });
+}); });
+router.put("/comment", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var _a, id, comment, data, error_5;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
+            case 0:
+                _a = req.body, id = _a.id, comment = _a.comment;
+                _b.label = 1;
+            case 1:
+                _b.trys.push([1, 3, , 4]);
+                return [4 /*yield*/, db_1.pool.query("UPDATE bugs SET comments = array_append(comments, $2) WHERE id = $1 RETURNING *", [
+                        id,
+                        comment
+                    ])];
             case 2:
-                error_3 = _a.sent();
-                console.log(error_3);
-                return [3 /*break*/, 3];
-            case 3: return [2 /*return*/];
+                data = _b.sent();
+                res.json(data.rows[0]);
+                return [3 /*break*/, 4];
+            case 3:
+                error_5 = _b.sent();
+                console.log(error_5);
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
         }
     });
 }); });

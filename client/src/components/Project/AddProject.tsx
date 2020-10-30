@@ -1,10 +1,9 @@
 import React, { useState, useContext } from "react";
 import "./Project.css";
-import { UserContext } from "../../contexts/UserContext";
-import { ProjectsContext } from "../../contexts/ProjectsContext";
+import { UserContext } from "../../Contexts";
+import { ProjectsContext } from "../../Contexts";
 import { addProject } from "../../services/project";
-
-type Event = React.FormEvent<HTMLFormElement>;
+import { FormEvent } from "../../types";
 
 const AddProject = () => {
   const { user } = useContext(UserContext);
@@ -13,7 +12,7 @@ const AddProject = () => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
 
-  const handleSubmit = async (event: Event) => {
+  const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
     try {
       //used any to shut ts up, this view won't be rendered if user is null

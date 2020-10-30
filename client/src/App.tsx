@@ -1,21 +1,14 @@
-import * as React from "react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import CSS from "csstype";
 import "./App.css";
 import Navbar from "./components/Navbar/Navbar";
 import Project from "./components/Project/Project";
 import AddProject from "./components/Project/AddProject";
 import Default from "./components/Project/Default";
-import { UserContext } from "./contexts/UserContext";
-import { ProjectsContext } from "./contexts/ProjectsContext";
+import { UserContext } from "./Contexts";
+import { ProjectsContext } from "./Contexts";
 import { loadProjects } from "./services/project";
-
-interface IProject {
-  id: string;
-  name: string;
-  userId: string;
-  description: string;
-}
+import { IProject } from "./types";
 
 const App = () => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -34,20 +27,14 @@ const App = () => {
     }
   }, [user]);
 
-  useEffect(() => {
-    if (projects[projects.length - 1]) {
-      setActiveIndex(projects.length - 1);
-    }
-  }, [projects.length]);
-
-  const handleChange = (id: string) => {
+  const handleChange = (id: string | undefined) => {
     const index = projects.findIndex((project) => project.id === id);
-    setAddProject(false);
     setActiveIndex(index);
   };
 
+  //ugh, issue with conditional rendering of addproject page
   const toggleAdd = () => {
-    setAddProject(true);
+    setAddProject(!addProject);
   };
 
   return (
@@ -59,8 +46,7 @@ const App = () => {
             <div className="projects-tabs">
               {(projects.length &&
                 projects.map((project, index) => {
-                  const spanStyles: CSS.Properties =
-                    index === activeIndex ? { position: "relative", left: "1px" } : { position: "static", right: "0" };
+                  const spanStyles: CSS.Properties = index === activeIndex ? { position: "relative", left: "2px" } : {};
                   return (
                     <span
                       key={project.id}
@@ -85,9 +71,9 @@ const App = () => {
             </div>
             <div className="project-active">
               {user && !addProject && projects.length > 0 && <Project project={projects[activeIndex]} />}
-              {user && !addProject && !projects.length && <Default user={true} />}
+              {user && !addProject && !projects.length && <Default signedIn={true} />}
               {user && addProject && <AddProject />}
-              {!user && <Default user={false} />}
+              {!user && <Default signedIn={false} />}
             </div>
           </main>
           <div>

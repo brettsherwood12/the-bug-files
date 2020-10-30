@@ -17,6 +17,11 @@ body {
 button:hover {
   cursor: pointer;
 }
+hr {
+  background-color: black;
+  height: 2px;
+  border: 0;
+}
 .App {
   background-image: url("./images/woodgrain.jpg");
   height: 100vh;

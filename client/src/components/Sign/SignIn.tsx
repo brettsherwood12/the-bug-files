@@ -1,9 +1,8 @@
 import React, { useState, useContext } from "react";
 import "./Sign.css";
-import { UserContext } from "../../contexts/UserContext";
+import { UserContext } from "../../Contexts";
 import { signIn } from "../../services/user";
-
-type Event = React.FormEvent<HTMLFormElement>;
+import { FormEvent } from "../../types";
 
 const SignIn = () => {
   const { setUser } = useContext(UserContext);
@@ -11,7 +10,7 @@ const SignIn = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = async (event: Event) => {
+  const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
     try {
       const user = await signIn({ username, password });

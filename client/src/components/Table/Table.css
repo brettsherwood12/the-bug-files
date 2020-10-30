@@ -5,10 +5,12 @@ table {
 th,
 td {
   padding: 0.5rem;
-  border: 1px solid gray;
+  border-bottom: 2px solid black;
+  border-right: 2px solid black;
 }
-th {
-  text-align: start;
+td:last-child,
+th:last-child {
+  border-right: none;
 }
 .first-column {
   width: 5%;
@@ -17,14 +19,11 @@ th {
   width: 10%;
 }
 .third-column {
-  /* width: 5%; */
+  width: 40%;
 }
 .fourth-column {
-  /* width: 5%; */
+  width: 35%;
 }
 .fifth-column {
   width: 10%;
-}
-.description-textarea {
-  width: 100%;
 }

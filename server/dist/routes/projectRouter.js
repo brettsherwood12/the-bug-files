@@ -40,27 +40,33 @@ var express_1 = require("express");
 var db_1 = require("../db");
 var router = express_1.Router();
 router.post("/add", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, name_1, description, userId, project, error_1;
+    var _a, name, description, userId, data, error_1;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
-                _b.trys.push([0, 2, , 3]);
-                _a = req.body, name_1 = _a.name, description = _a.description, userId = _a.userId;
-                return [4 /*yield*/, db_1.pool.query("INSERT INTO projects (user_id, name, description) VALUES($1, $2, $3) RETURNING *", [userId, name_1, description])];
+                _a = req.body, name = _a.name, description = _a.description, userId = _a.userId;
+                _b.label = 1;
             case 1:
-                project = _b.sent();
-                res.json(project.rows[0]);
-                return [3 /*break*/, 3];
+                _b.trys.push([1, 3, , 4]);
+                return [4 /*yield*/, db_1.pool.query("INSERT INTO projects (user_id, name, description) VALUES($1, $2, $3) RETURNING *", [
+                        userId,
+                        name,
+                        description
+                    ])];
             case 2:
+                data = _b.sent();
+                res.json(data.rows[0]);
+                return [3 /*break*/, 4];
+            case 3:
                 error_1 = _b.sent();
                 console.log(error_1);
-                return [3 /*break*/, 3];
-            case 3: return [2 /*return*/];
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
         }
     });
 }); });
 router.get("/:id", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var id, projects, error_2;
+    var id, data, error_2;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -70,8 +76,8 @@ router.get("/:id", function (req, res) { return __awaiter(void 0, void 0, void 0
                 _a.trys.push([1, 3, , 4]);
                 return [4 /*yield*/, db_1.pool.query("SELECT * FROM projects WHERE user_id = $1", [id])];
             case 2:
-                projects = _a.sent();
-                res.json(projects.rows);
+                data = _a.sent();
+                res.json(data.rows);
                 return [3 /*break*/, 4];
             case 3:
                 error_2 = _a.sent();
@@ -85,23 +91,29 @@ router.get("/:id", function (req, res) { return __awaiter(void 0, void 0, void 0
     return [2 /*return*/];
 }); }); });
 router.put("/:id", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var id, _a, name_2, description, error_3;
+    var id, _a, name, description, data, error_3;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
-                _b.trys.push([0, 2, , 3]);
                 id = req.params.id;
-                _a = req.body, name_2 = _a.name, description = _a.description;
-                return [4 /*yield*/, db_1.pool.query("UPDATE projects SET name = $2, description = $3, WHERE id = $1", [id, name_2, description])];
+                _a = req.body, name = _a.name, description = _a.description;
+                _b.label = 1;
             case 1:
-                _b.sent();
-                res.json({ edited: true });
-                return [3 /*break*/, 3];
+                _b.trys.push([1, 3, , 4]);
+                return [4 /*yield*/, db_1.pool.query("UPDATE projects SET name = $2, description = $3, WHERE id = $1", [
+                        id,
+                        name,
+                        description
+                    ])];
             case 2:
+                data = _b.sent();
+                res.json(data.rows[0]);
+                return [3 /*break*/, 4];
+            case 3:
                 error_3 = _b.sent();
                 console.log(error_3);
-                return [3 /*break*/, 3];
-            case 3: return [2 /*return*/];
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
         }
     });
 }); });
@@ -110,18 +122,20 @@ router.delete("/:id", function (req, res) { return __awaiter(void 0, void 0, voi
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                _a.trys.push([0, 2, , 3]);
                 id = req.params.id;
-                return [4 /*yield*/, db_1.pool.query("DELETE FROM projects WHERE id = $1", [id])];
+                _a.label = 1;
             case 1:
-                _a.sent();
-                res.json({ deletedId: id });
-                return [3 /*break*/, 3];
+                _a.trys.push([1, 3, , 4]);
+                return [4 /*yield*/, db_1.pool.query("DELETE FROM projects WHERE id = $1", [id])];
             case 2:
+                _a.sent();
+                res.json({ deleted: true });
+                return [3 /*break*/, 4];
+            case 3:
                 error_4 = _a.sent();
                 console.log(error_4);
-                return [3 /*break*/, 3];
-            case 3: return [2 /*return*/];
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
         }
     });
 }); });

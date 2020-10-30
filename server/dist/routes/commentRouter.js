@@ -37,13 +37,33 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = require("express");
+var db_1 = require("../db");
 var router = express_1.Router();
-router.post("/", function (req, res) { return __awaiter(void 0, void 0, void 0, function () { return __generator(this, function (_a) {
-    return [2 /*return*/];
-}); }); });
-router.get("/", function (req, res) { return __awaiter(void 0, void 0, void 0, function () { return __generator(this, function (_a) {
-    return [2 /*return*/];
-}); }); });
+router.post("/add", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var _a, bugId, comment, newComment, error_1;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
+            case 0:
+                _a = req.body, bugId = _a.bugId, comment = _a.comment;
+                _b.label = 1;
+            case 1:
+                _b.trys.push([1, 3, , 4]);
+                return [4 /*yield*/, db_1.pool.query("INSERT INTO comments (bug_id, comment) VALUES ($1, $2) RETURNING *", [
+                        bugId,
+                        comment
+                    ])];
+            case 2:
+                newComment = _b.sent();
+                res.json(newComment.rows[0]);
+                return [3 /*break*/, 4];
+            case 3:
+                error_1 = _b.sent();
+                console.log(error_1);
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
+        }
+    });
+}); });
 router.get("/:id", function (req, res) { return __awaiter(void 0, void 0, void 0, function () { return __generator(this, function (_a) {
     return [2 /*return*/];
 }); }); });

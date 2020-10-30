@@ -44,7 +44,7 @@ var bcryptjs_1 = __importDefault(require("bcryptjs"));
 var db_1 = require("../db");
 var router = express_1.Router();
 router.post("/sign-up", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, username, password, passwordHash, user, error_1;
+    var _a, username, password, passwordHash, data, error_1;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
@@ -60,8 +60,8 @@ router.post("/sign-up", function (req, res) { return __awaiter(void 0, void 0, v
                         passwordHash
                     ])];
             case 3:
-                user = _b.sent();
-                res.json(user.rows[0]);
+                data = _b.sent();
+                res.json(data.rows[0]);
                 return [3 /*break*/, 5];
             case 4:
                 error_1 = _b.sent();

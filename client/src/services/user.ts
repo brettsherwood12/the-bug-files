@@ -1,17 +1,13 @@
 import axios from "axios";
-
-interface IBody {
-  username: string;
-  password: string;
-}
+import { IUser } from "../types";
 
 const api = axios.create({
   baseURL: `http://localhost:3020/users`
 });
 
-export const signUp = (body: IBody) => api.post("/sign-up", body).then((response) => response.data);
+export const signUp = (body: IUser) => api.post("/sign-up", body).then((response) => response.data);
 
-export const signIn = (body: IBody) => api.post("/sign-in", body).then((response) => response.data);
+export const signIn = (body: IUser) => api.post("/sign-in", body).then((response) => response.data);
 
 //export const editUser = (id: string, body: IBody) => api.put(`/${id}`).then((response) => response.data);
 

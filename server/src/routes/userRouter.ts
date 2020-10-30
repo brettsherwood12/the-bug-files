@@ -8,11 +8,11 @@ router.post("/sign-up", async (req, res) => {
   const { username, password } = req.body;
   try {
     const passwordHash = await bcryptjs.hash(password, 10);
-    const user = await pool.query("INSERT INTO users (username, password_hash) VALUES($1, $2) RETURNING *", [
+    const data = await pool.query("INSERT INTO users (username, password_hash) VALUES($1, $2) RETURNING *", [
       username,
       passwordHash
     ]);
-    res.json(user.rows[0]);
+    res.json(data.rows[0]);
   } catch (error) {
     console.log(error);
   }

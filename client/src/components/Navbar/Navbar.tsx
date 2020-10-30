@@ -3,8 +3,9 @@ import "./Navbar.css";
 import logo from "../../images/bug.png";
 import SignUp from "../Sign/SignUp";
 import SignIn from "../Sign/SignIn";
-import { UserContext } from "../../contexts/UserContext";
-import { ProjectsContext } from "../../contexts/ProjectsContext";
+import { UserContext } from "../../Contexts";
+import { ProjectsContext } from "../../Contexts";
+import { ButtonEvent } from "../../types";
 
 const Navbar = () => {
   const { user, setUser } = useContext(UserContext);
@@ -12,13 +13,13 @@ const Navbar = () => {
 
   const [sign, setSign] = useState("in");
 
-  const toggleSign = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const toggleSign = (event: ButtonEvent) => {
     event.preventDefault();
     const newSign = sign === "up" ? "in" : "up";
     setSign(newSign);
   };
 
-  const handleSignOut = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleSignOut = (event: ButtonEvent) => {
     event.preventDefault();
     if (setUser && setProjects) {
       setUser(null);
@@ -30,7 +31,7 @@ const Navbar = () => {
     <nav>
       <div className="heading">
         <img src={logo} alt="bug logo" />
-        <h1>Bug-tracker</h1>
+        <h1>The-Bug-Files</h1>
       </div>
       <div className="auth">
         {(user && (

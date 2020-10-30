@@ -2,37 +2,38 @@ import React, { useState, useContext } from "react";
 import "./Project.css";
 import Table from "../Table/Table";
 import { deleteProject } from "../../services/project";
-import { ProjectsContext } from "../../contexts/ProjectsContext";
-
-type Event = React.FormEvent<HTMLFormElement>;
+import { ProjectsContext } from "../../Contexts";
+import { IProject } from "../../types";
+import { FormEvent } from "../../types";
+import { ButtonEvent } from "../../types";
 
 interface IProps {
-  project: {
-    id: string;
-    name: string;
-    description: string;
-  };
+  project: IProject;
 }
 
 const Project = (props: IProps) => {
+  const { project } = props;
+
   const { projects, setProjects } = useContext(ProjectsContext);
 
   const [allowDelete, setAllowDelete] = useState(false);
 
-  const handleSubmit = async (event: Event) => {
+  const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    const data = await deleteProject(props.project.id);
-    const index = projects.findIndex((project) => project.id === data.deletedId);
-    const newProjects = [...projects].splice(index, 1);
-    if (setProjects) setProjects(newProjects);
+    const data = await deleteProject(project.id);
+    if (data.deleted) {
+      const index = projects.findIndex((item) => item.id === project.id);
+      const newProjects = [...projects].splice(index, 1);
+      if (setProjects) setProjects(newProjects);
+    }
   };
 
-  const handleDeleteClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleDeleteClick = (event: ButtonEvent) => {
     event.preventDefault();
     setAllowDelete(true);
   };
 
-  const handleNoClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleNoClick = (event: ButtonEvent) => {
     event.preventDefault();
     setAllowDelete(false);
   };
@@ -41,8 +42,8 @@ const Project = (props: IProps) => {
     <div className="project">
       <div className="project-header">
         <div>
-          <p>Project: {props.project.name}</p>
-          <p>Description: {props.project.description}</p>
+          <p>Project: {project.name}</p>
+          <p>Description: {project.description}</p>
         </div>
         <div>
           {(!allowDelete && (
@@ -65,7 +66,7 @@ const Project = (props: IProps) => {
         </div>
       </div>
       <hr />
-      <Table projectId={props.project.id} />
+      <Table projectId={project.id} />
     </div>
   );
 };
