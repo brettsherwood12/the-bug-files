@@ -24,3 +24,8 @@ export interface IBug {
   status?: string;
   comments?: string[];
 }
+
+interface IComment {
+  bugId?: string;
+  comment?: string;
+}

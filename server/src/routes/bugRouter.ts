@@ -26,11 +26,22 @@ router.get("/get/:id", async (req, res) => {
   }
 });
 
-router.put("/status", async (req, res) => {
+router.put("/status/edit", async (req, res) => {
   console.log(req.body);
   const { id, status } = req.body;
   try {
     const data = await pool.query("UPDATE bugs SET status = $2 WHERE id = $1 RETURNING *", [id, status]);
+    res.json(data.rows[0]);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+router.put("/description/edit", async (req, res) => {
+  console.log(req.body);
+  const { id, description } = req.body;
+  try {
+    const data = await pool.query("UPDATE bugs SET description = $2 WHERE id = $1 RETURNING *", [id, description]);
     res.json(data.rows[0]);
   } catch (error) {
     console.log(error);
@@ -47,11 +58,24 @@ router.delete("/delete/:id", async (req, res) => {
   }
 });
 
-router.put("/comment", async (req, res) => {
-  const { id, comment } = req.body;
+router.put("/comment/add", async (req, res) => {
+  const { bugId, comment } = req.body;
   try {
     const data = await pool.query("UPDATE bugs SET comments = array_append(comments, $2) WHERE id = $1 RETURNING *", [
-      id,
+      bugId,
+      comment
+    ]);
+    res.json(data.rows[0]);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+router.put("/comment/delete", async (req, res) => {
+  const { bugId, comment } = req.body;
+  try {
+    const data = await pool.query("UPDATE bugs SET comments = array_remove(comments, $2) WHERE id = $1 RETURNING *", [
+      bugId,
       comment
     ]);
     res.json(data.rows[0]);

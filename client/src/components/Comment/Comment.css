@@ -1,0 +1,14 @@
+.comments-list {
+  margin-left: 1rem;
+  list-style-type: circle;
+}
+.comments-list li {
+  padding-bottom: 0.25rem;
+}
+.comments-list form {
+  padding: 0.25rem 0 0 0;
+}
+.comment {
+  display: flex;
+  justify-content: space-between;
+}
