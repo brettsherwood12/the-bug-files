@@ -27,7 +27,6 @@ router.get("/get/:id", async (req, res) => {
 });
 
 router.put("/status/edit", async (req, res) => {
-  console.log(req.body);
   const { id, status } = req.body;
   try {
     const data = await pool.query("UPDATE bugs SET status = $2 WHERE id = $1 RETURNING *", [id, status]);

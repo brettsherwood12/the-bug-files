@@ -3,7 +3,7 @@
   padding: 2rem;
   height: 100%;
 }
-.project form {
+.add-project-form {
   padding: 1rem 0;
 }
 .project-header {
@@ -15,8 +15,16 @@
   display: flex;
   margin: 1rem 0;
 }
-.sure-form {
-  padding: 0 !important;
+.edit-project-form {
+  display: flex;
+  flex-direction: row;
+}
+.edit-project-form button {
+  height: 50%;
+  margin-left: 2rem;
+}
+.edit-project-button {
+  margin-right: 1rem;
 }
 .yes-button {
   width: 3rem;

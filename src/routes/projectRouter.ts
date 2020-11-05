@@ -17,24 +17,20 @@ router.post("/add", async (req, res) => {
   }
 });
 
-router.get("/:id", async (req, res) => {
-  const { id } = req.params;
+router.get("/:userId", async (req, res) => {
+  const { userId } = req.params;
   try {
-    const data = await pool.query("SELECT * FROM projects WHERE user_id = $1", [id]);
+    const data = await pool.query("SELECT * FROM projects WHERE user_id = $1", [userId]);
     res.json(data.rows);
   } catch (error) {
     console.log(error);
   }
 });
 
-router.get("/:id", async (req, res) => {});
-
-router.put("/:id", async (req, res) => {
-  //haven't implemented this on front end
-  const { id } = req.params;
-  const { name, description } = req.body;
+router.put("/edit", async (req, res) => {
+  const { id, name, description } = req.body;
   try {
-    const data = await pool.query("UPDATE projects SET name = $2, description = $3, WHERE id = $1", [
+    const data = await pool.query("UPDATE projects SET name = $2, description = $3 WHERE id = $1", [
       id,
       name,
       description
@@ -48,8 +44,9 @@ router.put("/:id", async (req, res) => {
 router.delete("/:id", async (req, res) => {
   const { id } = req.params;
   try {
+    await pool.query("DELETE FROM bugs WHERE project_id = $1", [id]);
     await pool.query("DELETE FROM projects WHERE id = $1", [id]);
-    res.json({ deleted: true });
+    res.json({});
   } catch (error) {
     console.log(error);
   }

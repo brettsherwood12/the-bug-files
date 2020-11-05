@@ -12,7 +12,7 @@ export interface IUser {
 
 export interface IProject {
   id?: string;
-  userId: string;
+  userId?: string;
   name: string;
   description: string;
 }

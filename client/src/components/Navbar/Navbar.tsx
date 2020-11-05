@@ -4,28 +4,11 @@ import logo from "../../images/bug.png";
 import SignUp from "../Sign/SignUp";
 import SignIn from "../Sign/SignIn";
 import { UserContext } from "../../Contexts";
-import { ProjectsContext } from "../../Contexts";
-import { ButtonEvent } from "../../types";
 
 const Navbar = () => {
   const { user, setUser } = useContext(UserContext);
-  const { setProjects } = useContext(ProjectsContext);
 
-  const [sign, setSign] = useState("in");
-
-  const toggleSign = (event: ButtonEvent) => {
-    event.preventDefault();
-    const newSign = sign === "up" ? "in" : "up";
-    setSign(newSign);
-  };
-
-  const handleSignOut = (event: ButtonEvent) => {
-    event.preventDefault();
-    if (setUser && setProjects) {
-      setUser(null);
-      setProjects([]);
-    }
-  };
+  const [signIn, setSignIn] = useState(true);
 
   return (
     <nav>
@@ -39,15 +22,15 @@ const Navbar = () => {
             <p>Welcome, {user.username}</p>
           </div>
         )) ||
-          (sign === "in" && <SignIn />) || <SignUp />}
+          (signIn === true && <SignIn />) || <SignUp />}
         {(user && (
           <span className="nav-action-span">
-            <button onClick={handleSignOut}>Sign Out</button>
+            <button onClick={() => setUser(null)}>Sign Out</button>
           </span>
         )) || (
           <span className="nav-action-span">
             <p>Or:</p>
-            <button onClick={toggleSign}>{sign === "up" ? "Sign In" : "Sign Up"}</button>
+            <button onClick={() => setSignIn(!signIn)}>{signIn === true ? "Sign Up" : "Sign In"}</button>
           </span>
         )}
       </div>

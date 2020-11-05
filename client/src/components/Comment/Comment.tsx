@@ -2,8 +2,7 @@ import React, { useContext } from "react";
 import "./Comment.css";
 import { deleteComment } from "../../services/bug";
 import { BugsContext } from "../../Contexts";
-import { IComment } from "../../types";
-import { FormEvent } from "../../types";
+import { IComment, FormEvent } from "../../types";
 
 interface IProps {
   data: IComment;
@@ -19,9 +18,9 @@ const Comment = (props: IProps) => {
     try {
       const newBug = await deleteComment({ bugId: data.bugId, comment: data.comment });
       const index = bugs.findIndex((item) => item.id === data.bugId);
-      const newBugs = [...bugs].splice(index, 1, newBug);
-      //in context file ts yells if setProjects doesn't have | null, but I don't think it can be null ever
-      if (setBugs) setBugs(newBugs);
+      const newBugs = [...bugs];
+      newBugs[index] = newBug;
+      setBugs(newBugs);
     } catch (error) {
       console.log(error);
     }

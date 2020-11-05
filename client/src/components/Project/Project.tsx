@@ -5,7 +5,6 @@ import { deleteProject } from "../../services/project";
 import { ProjectsContext } from "../../Contexts";
 import { IProject } from "../../types";
 import { FormEvent } from "../../types";
-import { ButtonEvent } from "../../types";
 
 interface IProps {
   project: IProject;
@@ -14,28 +13,18 @@ interface IProps {
 const Project = (props: IProps) => {
   const { project } = props;
 
-  const { projects, setProjects } = useContext(ProjectsContext);
-
-  const [allowDelete, setAllowDelete] = useState(false);
+  const { projects, setProjects, setActiveIndex } = useContext(ProjectsContext);
+  const [deleteMode, setDeleteMode] = useState(false);
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    const data = await deleteProject(project.id);
-    if (data.deleted) {
-      const index = projects.findIndex((item) => item.id === project.id);
-      const newProjects = [...projects].splice(index, 1);
-      if (setProjects) setProjects(newProjects);
-    }
-  };
-
-  const handleDeleteClick = (event: ButtonEvent) => {
-    event.preventDefault();
-    setAllowDelete(true);
-  };
-
-  const handleNoClick = (event: ButtonEvent) => {
-    event.preventDefault();
-    setAllowDelete(false);
+    await deleteProject(project.id);
+    const index = projects.findIndex((item) => item.id === project.id);
+    const newProjects = [...projects];
+    newProjects.splice(index, 1);
+    setDeleteMode(false);
+    setActiveIndex(0);
+    setProjects(newProjects);
   };
 
   return (
@@ -46,8 +35,8 @@ const Project = (props: IProps) => {
           <p>Description: {project.description}</p>
         </div>
         <div>
-          {(!allowDelete && (
-            <button className="delete-button" type="submit" onClick={handleDeleteClick}>
+          {(!deleteMode && (
+            <button className="delete-button" type="submit" onClick={() => setDeleteMode(true)}>
               delete
             </button>
           )) || (
@@ -57,7 +46,7 @@ const Project = (props: IProps) => {
                 <button className="yes-button" type="submit">
                   Yes
                 </button>
-                <button className="no-button" onClick={handleNoClick}>
+                <button className="no-button" onClick={() => setDeleteMode(false)}>
                   No
                 </button>
               </form>

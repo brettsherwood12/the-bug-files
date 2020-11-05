@@ -7,7 +7,7 @@ import { FormEvent } from "../../types";
 
 const AddProject = () => {
   const { user } = useContext(UserContext);
-  const { projects, setProjects } = useContext(ProjectsContext);
+  const { projects, setProjects, setActiveIndex } = useContext(ProjectsContext);
 
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -18,8 +18,10 @@ const AddProject = () => {
       //used any to shut ts up, this view won't be rendered if user is null
       const project = await addProject({ name, description, userId: (user as any).id });
       const newProjects = [...projects, project];
-      //in ProjectsContext file ts yells if setProjects doesn't have | null, but I don't think it can be null ever
-      if (setProjects) setProjects(newProjects);
+      setDescription("");
+      setName("");
+      setProjects(newProjects);
+      setActiveIndex(newProjects.length - 1);
     } catch (error) {
       console.log(error);
     }
@@ -28,7 +30,7 @@ const AddProject = () => {
   return (
     <div className="project">
       <p>Add Project</p>
-      <form onSubmit={handleSubmit}>
+      <form className="add-project-form" onSubmit={handleSubmit}>
         <div>
           <label htmlFor="name-input">Name:</label>
           <input id="name-input" type="text" value={name} onChange={(event) => setName(event.target.value)} />

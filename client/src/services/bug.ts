@@ -1,6 +1,5 @@
 import axios from "axios";
-import { IBug } from "../types";
-import { IComment } from "../types";
+import { IBug, IComment } from "../types";
 
 const api = axios.create({
   baseURL: `http://localhost:3020/bugs`

@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
 import "./Table.css";
 import Bug from "../Bug/Bug";
-import { loadBugs } from "../../services/bug";
-import { addBug } from "../../services/bug";
+import { loadBugs, addBug } from "../../services/bug";
 import { BugsContext } from "../../Contexts";
-import { IBug } from "../../types";
-import { FormEvent } from "../../types";
+import { IBug, FormEvent } from "../../types";
 
 interface IProps {
   projectId: string | undefined;
@@ -25,11 +23,12 @@ const Table = (props: IProps) => {
       .catch((error) => console.log(error));
   }, [projectId]);
 
-  const handleAddBug = async (event: FormEvent) => {
+  const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
     try {
       const bug = await addBug({ projectId, description });
       const newBugs = [...bugs, bug];
+      setDescription("");
       setBugs(newBugs);
     } catch (error) {
       console.log(error);
@@ -48,8 +47,8 @@ const Table = (props: IProps) => {
             <th className="fifth-column">Action</th>
           </tr>
         </thead>
+        <tbody>{bugs.length > 0 && bugs.map((bug: IBug, index) => <Bug key={bug.id} bug={bug} index={index} />)}</tbody>
         <tbody>
-          {bugs.length > 0 && bugs.map((bug: IBug, index) => <Bug key={bug.id} bug={bug} index={index} />)}
           <tr>
             <td>New</td>
             <td>To Do</td>
@@ -63,7 +62,7 @@ const Table = (props: IProps) => {
             </td>
             <td>N/A</td>
             <td>
-              <form onSubmit={handleAddBug}>
+              <form onSubmit={handleSubmit}>
                 <button type="submit">Add</button>
               </form>
             </td>

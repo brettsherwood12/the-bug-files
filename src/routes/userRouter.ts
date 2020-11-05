@@ -26,17 +26,10 @@ router.post("/sign-in", async (req, res) => {
     const user = response.rows[0];
     const result = await bcryptjs.compare(password, user.password_hash);
     if (!result) throw new Error("Wrong password.");
-    //req.session.user = user._id;
     res.json({ id: user.id, username: user.username });
   } catch (error) {
     console.log(error);
   }
 });
-
-router.get("/:id", async (req, res) => {});
-
-router.put("/:id", async (req, res) => {});
-
-router.delete("/:id", async (req, res) => {});
 
 export default router;
