@@ -7,7 +7,7 @@
     "watch": "tsc -w",
     "dev": "nodemon ./dist/index.js",
     "postinstall": "tsc",
-    "build": "cd client && npm run build && cd .. && node ./dist/index"
+    "build": "cd client && npm install && npm run build && cd .. && node ./dist/index"
   },
   "author": "",
   "license": "ISC",
