@@ -14,7 +14,7 @@ app.use(
   })
 );
 
-app.use(express.static(join(__dirname, "client", "build")));
+app.use(express.static(join(__dirname, "build")));
 
 app.use(express.json());
 
