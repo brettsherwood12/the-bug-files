@@ -7,7 +7,8 @@
     "watch": "tsc -w",
     "dev": "nodemon ./dist/index.js",
     "start": "node ./dist/index",
-    "build": "tsc && node ./dist/index && cd client && npm run build"
+    "build": "tsc && node ./dist/index",
+    "heroku-postbuild": "cd client && npm run build"
   },
   "author": "",
   "license": "ISC",
