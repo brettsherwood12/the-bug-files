@@ -2,7 +2,7 @@ import axios from "axios";
 import { IBug, IComment } from "../types";
 
 const api = axios.create({
-  baseURL: `http://localhost:3020/bugs`
+  baseURL: `${process.env.REACT_APP_API_URL}/bugs`
 });
 
 export const addBug = (body: IBug) => api.post("/add", body).then((response) => response.data);

@@ -2,7 +2,7 @@ import axios from "axios";
 import { IProject } from "../types";
 
 const api = axios.create({
-  baseURL: `http://localhost:3020/projects`
+  baseURL: `${process.env.REACT_APP_API_URL}/projects`
 });
 
 export const addProject = (body: IProject) => api.post("/add", body).then((response) => response.data);
