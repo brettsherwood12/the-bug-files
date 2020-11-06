@@ -1,6 +1,6 @@
 /* ran these on command line to instatiate db, not used by app, recorded to instatiate add'l db's when needed */
 
-CREATE DATABASE the_bug_files;
+CREATE DATABASE process.env.DATABASE_NAME;
 
 CREATE TABLE users(id SERIAL PRIMARY KEY, username VARCHAR(25), password_hash VARCHAR(100));
 
